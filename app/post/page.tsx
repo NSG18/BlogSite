@@ -5,6 +5,7 @@ import PostSus from "@/app/Components/postSus"
 
 
 export default async function Posts() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const posts = await prisma.post.findMany();
 
   return (
