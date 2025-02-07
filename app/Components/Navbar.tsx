@@ -15,7 +15,8 @@ export default function Navbar() {
     return (
         <ClerkProvider>
             <div className="main flex justify-between items-center px-7 border-b border-zinc-300 pb-2">
-                <div className="logo font-bold text-2xl">NK</div>
+
+                <Link href="./"><div className="logo font-bold text-2xl">NK</div></Link>
                 <div className="list text-sm">
                     <ul className="flex gap-5 items-center ">
                         <li><Link href="./" className={` ${pathname === "/" ? "text-zinc-900" : "text-zinc-400"}`} >Home</Link></li>

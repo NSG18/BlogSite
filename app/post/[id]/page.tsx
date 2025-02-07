@@ -1,32 +1,18 @@
-"use client";
+import prisma from "@/lib/prisma";
+// import PostSus from "@/app/Components/postSus";
+import NotFound from "./notFound";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+export default async function PostDetail({ params }: { params: { id: string } }) {
 
-export default function PostDetail() {
-  const { id } = useParams();
-  const [post, setPost] = useState<{ title: string; content: string } | null>(null);
-  const [loading, setLoading] = useState(true);
+  const post = await prisma.post.findUnique({
+    where: {
+      id: params.id
+    }
+  })
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const res = await fetch(`/api/posts/${id}`);
-        if (!res.ok) throw new Error("Post not found");
-        const data = await res.json();
-        setPost(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) fetchPost();
-  }, [id]);
-
-  if (loading) return <p>Loading...</p>;
-  if (!post) return <p>Post not found.</p>;
+  if (!post) {
+    return <NotFound />
+  }
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6">
