@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
-// import PostSus from "@/app/Components/postSus";
 import NotFound from "./notFound";
 
-export default async function PostDetail({ params }: { params: { id: string } }) {
+interface PostDetailProps {
+  params: { id: string };
+}
+
+export default async function PostDetail({ params }: PostDetailProps) {
 
   const post = await prisma.post.findUnique({
     where: {
