@@ -1,20 +1,18 @@
 import prisma from "@/lib/prisma";
-import NotFound from "./notFound";
 
 interface PostDetailProps {
   params: { id: string };
 }
 
 export default async function PostDetail({ params }: PostDetailProps) {
-
   const post = await prisma.post.findUnique({
     where: {
-      id: params.id
-    }
-  })
+      id: params.id,
+    },
+  });
 
   if (!post) {
-    return <NotFound />
+    return <div className="text-center text-gray-500">Post not found</div>;
   }
 
   return (
