@@ -1,14 +1,18 @@
+
 import prisma from "@/lib/prisma";
+import { notFound } from "next/navigation";
 
 interface PostDetailProps {
   params: { id: string };
 }
 
 export default async function PostDetail({ params }: PostDetailProps) {
+  if (!params || !params.id) {
+    return notFound(); // ✅ Handle missing params safely
+  }
+
   const post = await prisma.post.findUnique({
-    where: {
-      id: params.id,
-    },
+    where: { id: params.id },
   });
 
   if (!post) {
