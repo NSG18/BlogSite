@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 
 const CreatePost = () => {
 
-
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [error, setError] = useState("");
@@ -32,7 +31,6 @@ const CreatePost = () => {
 
     router.push("/");
   }
-
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
