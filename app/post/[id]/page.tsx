@@ -1,23 +1,33 @@
+"use client";
 
-import prisma from "@/lib/prisma";
-import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
-interface PostDetailProps {
-  params: { id: string };
-}
+export default function PostDetail() {
+  const { id } = useParams();
+  const [post, setPost] = useState<{ title: string; content: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function PostDetail({ params }: PostDetailProps) {
-  if (!params || !params.id) {
-    return notFound(); // ✅ Handle missing params safely
-  }
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch(`/api/post/${id}`);
+        if (!res.ok) throw new Error("Post not found");
+        const data = await res.json();
+        setPost(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const post = await prisma.post.findUnique({
-    where: { id: params.id },
-  });
+    if (id) fetchPost();
+  }, [id]);
 
-  if (!post) {
-    return <div className="text-center text-gray-500">Post not found</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  console.log(post)
+  if (!post) return <p>Post not found.</p>;
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6">
