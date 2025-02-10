@@ -1,7 +1,8 @@
 
 import { PostAct } from "@/actions/action"
 
-const CreatePost = () => {
+
+export default function CreatePost() {
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
@@ -28,7 +29,6 @@ const CreatePost = () => {
   )
 }
 
-export default CreatePost
 
 
 

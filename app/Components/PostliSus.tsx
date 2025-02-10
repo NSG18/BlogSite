@@ -1,6 +1,4 @@
-
-
-export default function PostSus() {
+export default function PostliSus() {
     return (
         <div className="min-h-screen max-w-xl mx-auto p-6">
             {/* Loading Skeleton */}
@@ -9,7 +7,9 @@ export default function PostSus() {
                 <div className="h-6 bg-gray-300 animate-pulse rounded-md"></div>
 
                 {/* Content Placeholder */}
-                <div className="h-[100px] bg-gray-300 animate-pulse rounded-md"></div>
+                <div className="h-4 bg-gray-300 animate-pulse rounded-md"></div>
+                <div className="h-4 bg-gray-300 animate-pulse rounded-md"></div>
+                <div className="h-4 bg-gray-300 animate-pulse rounded-md"></div>
             </div>
         </div>
     )
