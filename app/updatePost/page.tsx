@@ -12,7 +12,7 @@ export default async function UpdatePost(props: { searchParams: Promise<{ id?: s
     })
 
     if (!post) {
-        return <div className="min-h-screen text-center">Post not found</div>;
+        return <div className="min-h-screen text-center">Post not found from updatepost page</div>;
     }
 
     return (

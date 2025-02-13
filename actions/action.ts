@@ -14,7 +14,7 @@ export async function PostAct(formData: FormData) {
         }
     })
 
-    revalidatePath("/post");
+    revalidatePath("/");
 }
 
 
@@ -28,6 +28,8 @@ export async function DeletePost(id: string) {
         throw new Error('Post not found');
     }
     await prisma.post.delete({ where: { id } })
+
+    revalidatePath(`/post`);
 }
 
 export async function UpdatePost1(formData: FormData, id: string) {
