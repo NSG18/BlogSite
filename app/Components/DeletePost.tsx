@@ -8,6 +8,10 @@ export default function DeletePt({ id }: { id: string }) {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
+    if (!id) {
+        console.log("Id not get")
+    }
+
     return (
 
         <button onClick={() => startTransition(async () => {

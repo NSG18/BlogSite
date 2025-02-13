@@ -20,6 +20,13 @@ export async function PostAct(formData: FormData) {
 
 
 export async function DeletePost(id: string) {
+    const post = await prisma.post.findUnique({
+        where: { id },
+    });
+
+    if (!post) {
+        throw new Error('Post not found');
+    }
     await prisma.post.delete({ where: { id } })
 }
 
