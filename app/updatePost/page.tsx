@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma"
 
-export default async function UpdatePost({ searchParams }: { searchParams: { id?: string } }) {
+export default async function UpdatePost(props: { searchParams: Promise<{ id?: string }> }) {
+    const searchParams = await props.searchParams;
     const id = await searchParams.id
     if (!id) {
         return <div className="min-h-screen text-center">Invalid post ID</div>;
