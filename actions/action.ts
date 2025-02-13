@@ -23,21 +23,6 @@ export async function DeletePost(id: string) {
     await prisma.post.delete({ where: { id } })
 }
 
-// export async function UpdatePost(formData: FormData, id: string) {
-//     const title = formData.get("title") as string
-//     const content = formData.get("content") as string
-
-//     await prisma.post.update({
-
-//         where: { id },
-
-//         data: {
-//             title,
-//             content
-//         },
-//     })
-// }
-
 export async function UpdatePost1(formData: FormData, id: string) {
     try {
         const title = formData.get("title") as string;

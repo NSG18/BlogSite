@@ -1,10 +1,10 @@
-
+'use client'
 import { PostAct } from "@/actions/action"
-
 
 export default function CreatePost() {
 
   return (
+
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
       <h1 className="text-2xl font-bold mb-4">Create a New Blog Post</h1>
       <form action={PostAct} className="space-y-4">
@@ -26,6 +26,7 @@ export default function CreatePost() {
         </button>
       </form>
     </div>
+
   )
 }
 

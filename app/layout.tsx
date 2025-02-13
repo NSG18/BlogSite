@@ -4,6 +4,7 @@ import "./globals.css";
 import Container from "./Components/container";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,16 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-100`}
-      >
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-100`}
+        >
           <Container>
             <Navbar />
             {children}
             <Footer />
           </Container>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
