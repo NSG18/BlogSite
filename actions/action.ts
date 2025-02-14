@@ -15,6 +15,7 @@ export async function PostAct(formData: FormData) {
     })
 
     revalidatePath("/");
+    revalidatePath("/post"); // Refresh posts list
 }
 
 
@@ -32,6 +33,7 @@ export async function DeletePost(id: string) {
     }
     await prisma.post.delete({ where: { id } })
 
+    revalidatePath("/");
     revalidatePath(`/post`);
 }
 
