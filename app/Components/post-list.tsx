@@ -1,5 +1,5 @@
-
-
-export default function postlists() {
-    console.log("postlists")
+export default function postLists() {
+    return (
+        <div>Post list</div>
+    )
 }

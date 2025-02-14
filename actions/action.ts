@@ -20,6 +20,9 @@ export async function PostAct(formData: FormData) {
 
 
 export async function DeletePost(id: string) {
+
+    if (!id) throw new Error("Post ID is required");
+
     const post = await prisma.post.findUnique({
         where: { id },
     });

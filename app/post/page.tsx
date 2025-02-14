@@ -4,15 +4,10 @@ import { Suspense } from "react";
 import PostliSus from "../Components/PostliSus";
 import DeletePt from "../Components/DeletePost";
 import EditPt from "../Components/EditPt";
-import { unstable_noStore as noStore } from "next/cache"; // Prevent caching
 
-export async function getPosts() {
-  noStore(); // Ensures fresh data is fetched every time
-  return await prisma.post.findMany();
-}
 
 export default async function Posts() {
-  const posts = await getPosts();
+  const posts = await prisma.post.findMany()
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6">
