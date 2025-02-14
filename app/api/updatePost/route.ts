@@ -21,13 +21,12 @@ export async function POST(req: NextRequest) {
         }
 
         const updatedPost = await UpdatePost1(formData, id);
-        console.log('====================================');
         console.log(updatedPost);
-        console.log('====================================');
-        return NextResponse.redirect(new URL('/post', req.url));
+        return NextResponse.redirect(new URL(`/post/${id}`, req.url));
 
     } catch (error) {
         console.error("Error updating post:", error);
         return NextResponse.json({ error: "Failed to update post" }, { status: 500 });
     }
 }
+
