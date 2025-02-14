@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export async function PostAct(formData: FormData) {
     const title = formData.get("title") as string
@@ -40,30 +40,62 @@ export async function DeletePost(id: string) {
 
 export async function UpdatePost1(formData: FormData, id: string) {
     try {
+        console.log("UpdatePost1 called with id:", id);
+
         const title = formData.get("title") as string;
         const content = formData.get("content") as string;
 
-        // Ensure title and content are provided
         if (!title || !content) {
-            throw new Error('Title and content are required.');
+            console.error("Missing title or content in UpdatePost1");
+            throw new Error("Title and content are required.");
         }
 
         // Perform the update
-        await prisma.post.update({
+        const updatedPost = await prisma.post.update({
             where: { id },
             data: { title, content },
         });
 
+        console.log("Post updated in database:", updatedPost);
 
-        revalidatePath("/"); // If posts are listed on the homepage
-        revalidatePath("/posts"); // If posts are listed on /posts
+        // Revalidate cache to reflect changes
+        revalidatePath(`/`);
+        revalidatePath(`/posts`);
         revalidatePath(`/post/${id}`);
 
-
-        redirect(`/post/${id}`);
-
+        return updatedPost;
     } catch (error) {
-        console.error("Error updating post:", error);
-        throw new Error('Unable to update the post. Please try again later.');
+        console.error("Error in UpdatePost1:", error);
+        throw new Error("Unable to update the post. Please try again later.");
     }
 }
+
+// export async function UpdatePost1(formData: FormData, id: string) {
+//     try {
+//         const title = formData.get("title") as string;
+//         const content = formData.get("content") as string;
+
+//         // Ensure title and content are provided
+//         if (!title || !content) {
+//             throw new Error('Title and content are required.');
+//         }
+
+//         // Perform the update
+//         await prisma.post.update({
+//             where: { id },
+//             data: { title, content },
+//         });
+
+
+//         revalidatePath("/"); // If posts are listed on the homepage
+//         revalidatePath("/posts"); // If posts are listed on /posts
+//         revalidatePath(`/post/${id}`);
+
+
+//         redirect(`/post/${id}`);
+
+//     } catch (error) {
+//         console.error("Error updating post:", error);
+//         throw new Error('Unable to update the post. Please try again later.');
+//     }
+// }
