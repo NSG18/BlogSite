@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation";
 
 export async function PostAct(formData: FormData) {
     const title = formData.get("title") as string
@@ -48,13 +49,18 @@ export async function UpdatePost1(formData: FormData, id: string) {
         }
 
         // Perform the update
-        const updatedPost = await prisma.post.update({
+        await prisma.post.update({
             where: { id },
             data: { title, content },
         });
 
-        // Return updated post (optional)
-        return updatedPost;
+
+        revalidatePath("/"); // If posts are listed on the homepage
+        revalidatePath("/posts"); // If posts are listed on /posts
+        revalidatePath(`/post/${id}`);
+
+
+        redirect(`/post/${id}`);
 
     } catch (error) {
         console.error("Error updating post:", error);
