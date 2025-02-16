@@ -2,11 +2,20 @@
 
 import { useUser } from "@clerk/nextjs";
 import { PostAct } from "@/actions/action"
+import { useEffect } from "react";
+import { saveUserToDb } from "@/actions/auth";
+
 
 
 export default function CreatePost() {
 
-  const { user } = useUser(); // Get logged-in user
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      saveUserToDb(); // Store user info in DB when logged in
+    }
+  }, [user]);
 
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
