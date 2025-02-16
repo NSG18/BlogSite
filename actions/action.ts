@@ -4,19 +4,59 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 // import { redirect } from "next/navigation";
 
-export async function PostAct(formData: FormData) {
-    const title = formData.get("title") as string
-    const content = formData.get("content") as string
+// export async function PostAct(formData: FormData) {
+//     const user = await currentUser(); // Get logged-in user
+//     if (!user) {
+//         throw new Error("Unauthorized"); // Prevent unauthenticated users
+//     }
 
-    await prisma.post.create({
-        data: {
-            title,
-            content,
-        }
-    })
 
-    revalidatePath("/");
-    revalidatePath("/post"); // Refresh posts list
+//     const title = formData.get("title") as string
+//     const content = formData.get("content") as string
+
+//     if (!title || !content) {
+//         throw new Error("Title and content are required");
+//     }
+
+//     await prisma.post.create({
+//         data: {
+//             title,
+//             content,
+//             userId: user.id,
+//         }
+//     })
+
+//     revalidatePath("/");
+//     revalidatePath("/post"); // Refresh posts list
+// }
+
+
+
+
+export async function PostAct(formData: FormData): Promise<void> {
+    const userId = formData.get("userId") as string;
+    const title = formData.get("title") as string;
+    const content = formData.get("content") as string;
+
+    console.log("Extracted Data ->", { userId, title, content });
+
+    if (!userId || !title || !content) {
+        console.error("❌ Error: Missing required fields");
+        throw new Error("All fields are required.");
+    }
+
+    try {
+        console.log("🟢 Attempting to create post in Prisma...");
+
+        const post = await prisma.post.create({
+            data: { title, content, userId },
+        });
+
+        console.log("✅ Post successfully created!", post);
+    } catch (error) {
+        console.error("❌ Prisma Error:", error);
+        throw new Error("Failed to create post.");
+    }
 }
 
 
@@ -69,33 +109,3 @@ export async function UpdatePost1(formData: FormData, id: string) {
         throw new Error("Unable to update the post. Please try again later.");
     }
 }
-
-// export async function UpdatePost1(formData: FormData, id: string) {
-//     try {
-//         const title = formData.get("title") as string;
-//         const content = formData.get("content") as string;
-
-//         // Ensure title and content are provided
-//         if (!title || !content) {
-//             throw new Error('Title and content are required.');
-//         }
-
-//         // Perform the update
-//         await prisma.post.update({
-//             where: { id },
-//             data: { title, content },
-//         });
-
-
-//         revalidatePath("/"); // If posts are listed on the homepage
-//         revalidatePath("/posts"); // If posts are listed on /posts
-//         revalidatePath(`/post/${id}`);
-
-
-//         redirect(`/post/${id}`);
-
-//     } catch (error) {
-//         console.error("Error updating post:", error);
-//         throw new Error('Unable to update the post. Please try again later.');
-//     }
-// }

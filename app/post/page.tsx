@@ -2,9 +2,13 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import DeletePt from "../Components/DeletePost";
 import EditPt from "../Components/EditPt";
+import { auth } from "@clerk/nextjs/server";
 
 
 export default async function Posts() {
+
+  const { userId } = await auth();
+
   const posts = await prisma.post.findMany()
 
   return (
@@ -14,15 +18,18 @@ export default async function Posts() {
         {posts.map((post) => (
           <li key={post.id} className="flex justify-between py-2">
             <Link className="text-black hover:underline-none" href={`/post/${post.id}`}>{post.title}</Link>
-            <div className="flex gap-2">
-              <DeletePt id={post.id} />
-              <EditPt id={post.id} />
-            </div>
+            {userId === post.userId && (
+              < div className="flex gap-2">
+                <DeletePt id={post.id} />
+                <EditPt id={post.id} />
+              </div>
+            )}
+
           </li>
         ))}
       </ul>
 
-    </div>
+    </div >
 
   )
 }

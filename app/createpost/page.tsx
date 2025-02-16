@@ -1,10 +1,14 @@
 'use client'
+
+import { useUser } from "@clerk/nextjs";
 import { PostAct } from "@/actions/action"
+
 
 export default function CreatePost() {
 
-  return (
+  const { user } = useUser(); // Get logged-in user
 
+  return (
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
       <h1 className="text-2xl font-bold mb-4">Create a New Blog Post</h1>
       <form action={PostAct} className="space-y-4">
@@ -21,6 +25,7 @@ export default function CreatePost() {
           name="content"
           required
         />
+        {user && <input type="hidden" name="userId" value={user.id} />}
         <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
           Post
         </button>
