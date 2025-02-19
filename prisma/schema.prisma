@@ -21,6 +21,7 @@ model Post {
   content   String
   userId    String // Store Clerk user ID
   user      User     @relation(fields: [userId], references: [id])
+  imageUrl  String?
   createdAt DateTime @default(now())
 }
 

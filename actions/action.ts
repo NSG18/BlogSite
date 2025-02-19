@@ -2,45 +2,17 @@
 
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-// import { redirect } from "next/navigation";
-
-// export async function PostAct(formData: FormData) {
-//     const user = await currentUser(); // Get logged-in user
-//     if (!user) {
-//         throw new Error("Unauthorized"); // Prevent unauthenticated users
-//     }
-
-
-//     const title = formData.get("title") as string
-//     const content = formData.get("content") as string
-
-//     if (!title || !content) {
-//         throw new Error("Title and content are required");
-//     }
-
-//     await prisma.post.create({
-//         data: {
-//             title,
-//             content,
-//             userId: user.id,
-//         }
-//     })
-
-//     revalidatePath("/");
-//     revalidatePath("/post"); // Refresh posts list
-// }
-
-
 
 
 export async function PostAct(formData: FormData): Promise<void> {
     const userId = formData.get("userId") as string;
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
+    const imageUrl = formData.get("imageUrl") as string
 
-    console.log("Extracted Data ->", { userId, title, content });
+    console.log("Extracted Data ->", { userId, title, content, imageUrl });
 
-    if (!userId || !title || !content) {
+    if (!userId || !title || !content || !imageUrl) {
         console.error("❌ Error: Missing required fields");
         throw new Error("All fields are required.");
     }
@@ -49,7 +21,7 @@ export async function PostAct(formData: FormData): Promise<void> {
         console.log("🟢 Attempting to create post in Prisma...");
 
         const post = await prisma.post.create({
-            data: { title, content, userId },
+            data: { title, content, userId, imageUrl },
         });
 
         console.log("✅ Post successfully created!", post);

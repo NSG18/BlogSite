@@ -6,30 +6,51 @@ import {
     ClerkProvider,
     SignedIn,
     UserButton,
+    SignInButton,
+    SignUpButton,
+    useUser,
+    SignOutButton
 } from '@clerk/nextjs'
 
 
 
 export default function Navbar() {
     const pathname = usePathname()
+    const { isSignedIn } = useUser()
     return (
         <ClerkProvider>
-            <div className="main flex justify-between items-center px-7 border-b border-zinc-300 pb-2">
+            <div className="main flex justify-between items-center px-[200px] py-9  bg-gradient-to-r from-cyan-500 to-blue-500">
 
-                <Link href="./"><div className="logo font-bold text-2xl">NK</div></Link>
-                <div className="list text-sm">
-                    <ul className="flex gap-5 items-center ">
-                        <li><Link href="./" className={` ${pathname === "/" ? "text-zinc-900" : "text-zinc-400"}`} >Home</Link></li>
-                        <li><Link href="/post" className={` ${pathname === "/post" ? "text-zinc-900" : "text-zinc-400"}`} >Post</Link></li>
-                        <li><Link href="/createpost" className={` ${pathname === "/createpost" ? "text-zinc-900" : "text-zinc-400"}`} >Create Post</Link></li>
-                        <li>
-                            <SignedIn>
-                                <UserButton />
-                            </SignedIn>
-                        </li>
+                <Link href="./"><div className="logo font-bold text-2xl ">NN</div></Link>
+                <div className="list text-sm ml-[7.5rem] pb-0 pt-[17px]">
+                    <ul className="flex gap-6  ">
+                        <li><Link href="/post" className={` ${pathname === "/post" ? "font-bold" : ""}`} >All Posts</Link></li>
+                        <li><Link href="/createpost" className={` ${pathname === "/createpost" ? "font-bolg" : " "}`} >Write Post</Link></li>
                     </ul>
                 </div>
+                <div className="login flex gap-3">
+                    {isSignedIn ? (
+                        <div className=" flex gap-4 items-center justify-center ">
+                            <SignOutButton>
+                                <button>Sign Out</button>
+                            </SignOutButton>
+                        </div>
+                    ) : (
+                        <>
+                            <SignInButton>
+                                <button className="px-4 py-2 bg-white text-blue-600 rounded-lg border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                    Login
+                                </button>
+                            </SignInButton>
+                            <SignUpButton>
+                                <button className="px-4 py-2 bg-blue-600 text-white rounded-lg border border-white hover:bg-white hover:text-blue-600 transition">
+                                    Sign Up
+                                </button>
+                            </SignUpButton>
+                        </>
+                    )}
+                </div>
             </div>
-        </ClerkProvider>
+        </ClerkProvider >
     )
 }
