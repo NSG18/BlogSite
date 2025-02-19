@@ -55,7 +55,7 @@ export default async function Home() {
         <div className="w-[68%] bg-[#f9fbfc]  text-black font-bold">
           <div className="w-[75%]  pt-[90px] pl-10">
             <h1 className="text-3xl px-8 py-3 text-[#1a2932] ">Why i started NerdNest</h1>
-            <p className="px-8 text-sm py-2 text-[#36454F]">I'm Nakul, founder of NerdNest—a platform for developers to quickly read and share blogs with ease, without complex setups.</p>
+            <p className="px-8 text-sm py-2 text-[#36454F]">I &apos; m Nakul, founder of NerdNest—a platform for developers to quickly read and share blogs with ease, without complex setups.</p>
           </div>
           <div className="flex items-center gap-3 px-16 pt-6 pb-3">
             <div className="w-14 h-14 rounded-full bg-red-500"></div>

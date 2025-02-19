@@ -3,7 +3,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { PostAct } from "@/actions/action";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { saveUserToDb } from "@/actions/auth";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
