@@ -4,8 +4,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
     ClerkProvider,
-    SignedIn,
-    UserButton,
     SignInButton,
     SignUpButton,
     useUser,
