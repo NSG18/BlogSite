@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { saveUserToDb } from "@/actions/auth";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
+import { CloudinaryUploadWidgetResults, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 
 export default function CreatePost() {
   const { user } = useUser();
@@ -19,9 +20,12 @@ export default function CreatePost() {
     }
   }, [user]);
 
-  const handleUploadSuccess = (result: any) => {
-    if (result.event === "success") {
-      setImageUrl(result.info.secure_url); // Store image URL in state
+  const handleUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
+    if (result.event === "success" && typeof result.info !== "string") {
+      const info = result.info as CloudinaryUploadWidgetInfo;
+      if (info.secure_url) { // ✅ Ensure secure_url exists
+        setImageUrl(info.secure_url); // ✅ Store image URL safely
+      }// Store image URL in state
       setIsUploading(false); // Stop upload indicator
     }
   };
@@ -78,7 +82,7 @@ export default function CreatePost() {
         {/* Show Uploaded Image Preview */}
         {imageUrl && (
           <div className="mt-2">
-            <Image src={imageUrl} alt="Uploaded" className="w-32 h-32 object-cover rounded" />
+            <Image src={imageUrl} alt="Uploaded" width={32} height={32} className="w-32 h-32 object-cover rounded" />
           </div>
         )}
 
