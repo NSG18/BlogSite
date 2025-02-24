@@ -19,18 +19,18 @@ export default function Navbar() {
         <ClerkProvider>
             <div className="main flex justify-between items-center px-[200px] py-9  bg-gradient-to-r from-cyan-500 to-blue-500">
 
-                <Link href="./"><div className="logo font-bold text-2xl ">NN</div></Link>
-                <div className="list text-sm ml-[7.5rem] pb-0 pt-[17px]">
+                <Link href="./"><div className="logo font-bold text-2xl text-white ">NN</div></Link>
+                <div className="list text-sm ml-[7rem] pb-0 pt-[17px]">
                     <ul className="flex gap-6  ">
-                        <li><Link href="/post" className={` ${pathname === "/post" ? "font-bold" : ""}`} >All Posts</Link></li>
-                        <li><Link href="/createpost" className={` ${pathname === "/createpost" ? "font-bolg" : " "}`} >Write Post</Link></li>
+                        <li><Link href="/post" className={` ${pathname === "/post" ? "font-bold" : ""} text-white`} >All Posts</Link></li>
+                        <li><Link href="/createpost" className={` ${pathname === "/createpost" ? "font-bolg" : " "} text-white`} >Write Post</Link></li>
                     </ul>
                 </div>
                 <div className="login flex gap-3">
                     {isSignedIn ? (
                         <div className=" flex gap-4 items-center justify-center ">
                             <SignOutButton>
-                                <button>Sign Out</button>
+                                <button className="text-white">Sign Out</button>
                             </SignOutButton>
                         </div>
                     ) : (

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useUser } from "@clerk/nextjs";
@@ -66,7 +65,7 @@ export default function CreatePost() {
           {({ open }) => (
             <button
               type="button"
-              className={`px-4 py-2 ${isUploading ? "bg-gray-400 cursor-not-allowed" : "bg-gray-600"
+              className={`px-4 mx-4 py-2 ${isUploading ? "bg-gray-400 cursor-not-allowed" : "bg-gray-600"
                 } text-white rounded`}
               onClick={() => {
                 setIsUploading(true);
@@ -103,3 +102,4 @@ export default function CreatePost() {
     </div>
   );
 }
+

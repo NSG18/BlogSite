@@ -1,9 +1,19 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
+import TimeAgo from "./Components/timestamp";
+import SubscribeForm from "./Components/SubscribeForm";
 
 export default async function Home() {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    include: {
+      user: {
+        select: {
+          name: true, // Fetch the author's name
+        },
+      },
+    },
+  });
 
   return (
     <div className="bg-white min-h-screen flex flex-col">
@@ -25,7 +35,7 @@ export default async function Home() {
             {posts.map((post) => (
               <div
                 key={post.id}
-                className="text-black rounded-lg shadow-md text-left border-black border-2 h-[230px] w-[290px] overflow-hidden"
+                className="text-black rounded-lg shadow-md text-left border-black border-2 h-[250px] w-[290px] overflow-hidden"
               >
 
                 <div className="w-full h-[170px]">
@@ -34,14 +44,18 @@ export default async function Home() {
                     alt="Picture of the author"
                     width={290}
                     height={150}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover p-2 rounded-lg"
                   />
                 </div>
 
                 <div className="p-2">
-                  <Link href={`/post/${post.id}`} className="text-blue-600 hover:underline">
+                  <Link href={`/post/${post.id}`} className="font-bold m-2">
                     {post.title}
                   </Link>
+                  <div className="flex justify-between mx-2">
+                    <span className="text-sm"> by {post.user.name}</span>
+                    <span className="text-sm"><TimeAgo date={new Date(post.createdAt)} /> </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -77,13 +91,16 @@ export default async function Home() {
 
       {/* get notified in blue box */}
 
-      <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl py-10 my-20 w-[80%] h-[200px] mx-auto text-center">
-        <h1 className="text-2xl py-5">Get notified about our latest blogs published</h1>
+      {/* <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl py-10 my-20 w-[80%] h-[200px] mx-auto text-center">
+        <h1 className="text-2xl py-5 text-white">Get notified about our latest blogs published</h1>
         <div className="bg-white h-[50px] w-[320px] flex mx-auto rounded-md text-black ">
           <input type="email" className="rounded-xl px-3 font-bold border-none focus:outline-none" placeholder="your email Address... " />
           <button className="p-2 bg-orange-400 text-white font-bold m-[6px] rounded-md">Join us</button>
         </div>
-      </div>
+      </div> */}
+
+      {/* <Subscription /> */}
+      <SubscribeForm />
 
     </div>
   );

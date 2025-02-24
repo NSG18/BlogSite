@@ -32,3 +32,9 @@ model User {
   posts    Post[]
   createAt DateTime @default(now())
 }
+
+model Subscription {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}

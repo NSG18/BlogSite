@@ -12,7 +12,7 @@ export default async function Posts() {
   const posts = await prisma.post.findMany()
 
   return (
-    <div className="min-h-screen max-w-xl mx-auto p-6">
+    <div className="min-h-screen max-w-xl mx-auto p-6 my-8">
       <h1 className="text-2xl font-bold mb-4">All Blog Posts</h1>
       <ul className="py-8 my-2 space-y-2 border-t border-b border-black/35">
         {posts.map((post) => (

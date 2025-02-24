@@ -2,7 +2,16 @@
 
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+// import nodemailer from "nodemailer";
 
+// const transporter = nodemailer.createTransport({
+//     host: "smtp-relay.brevo.com",
+//     port: 587,
+//     auth: {
+//         user: process.env.BREVO_EMAIL,
+//         pass: process.env.BREVO_PASSWORD
+//     }
+// })
 
 export async function PostAct(formData: FormData): Promise<void> {
     const userId = formData.get("userId") as string;
@@ -10,7 +19,6 @@ export async function PostAct(formData: FormData): Promise<void> {
     const content = formData.get("content") as string;
     const imageUrl = formData.get("imageUrl") as string
 
-    console.log("Extracted Data ->", { userId, title, content, imageUrl });
 
     if (!userId || !title || !content || !imageUrl) {
         console.error("❌ Error: Missing required fields");
@@ -18,19 +26,39 @@ export async function PostAct(formData: FormData): Promise<void> {
     }
 
     try {
-        console.log("🟢 Attempting to create post in Prisma...");
-
         const post = await prisma.post.create({
             data: { title, content, userId, imageUrl },
         });
 
-        console.log("✅ Post successfully created!", post);
+
+        // const subscriber = await prisma.subscription.findMany()
+        // const emails = subscriber.map(sub => sub.email)
+        // console.log("SMTP Email:", process.env.BREVO_EMAIL);
+        // console.log("SMTP Password Exists:", process.env.BREVO_PASSWORD ? "Yes" : "No");
+
+
+        // if (emails.length > 0) {
+        //     await transporter.sendMail({
+        //         from: process.env.BREVO_EMAIL,
+        //         to: emails,
+        //         subject: `New Blog Post: ${post.title}`,
+        //         text: `A new blog post has been published: "${post.title}". Read more on our website!`,
+        //         html: `<h2>New Blog Post: ${post.title}</h2>
+        //         <p>${post.content.substring(0, 100)}...</p>
+        //         <p><a href="https://blog-site18.vercel.app/post/${post.id}">Read more</a></p>`,
+        //     })
+        //     console.log("Notification emails sent to subscribers.");
+        // }
+
+
     } catch (error) {
         console.error("❌ Prisma Error:", error);
         throw new Error("Failed to create post.");
     }
-}
 
+    revalidatePath(`/`);
+    revalidatePath(`/post`);
+}
 
 
 export async function DeletePost(id: string) {
@@ -47,7 +75,7 @@ export async function DeletePost(id: string) {
     await prisma.post.delete({ where: { id } })
 
     revalidatePath("/");
-    revalidatePath(`/post`);
+    revalidatePath("/post");
 }
 
 export async function UpdatePost1(formData: FormData, id: string) {

@@ -42,7 +42,7 @@ export default function Footer() {
                 </div>
                 <div>
                     <h3 className="pb-3 text-gray-400">Get it</h3>
-                    <span className=" text-gray-400">Available on Chrome Store</span>
+                    <h4 className=" text-gray-400">Available on Chrome Store</h4>
                     <button className="text-white bg-orange-400 py-3 px-2 my-2 rounded-md font-bold">
                         Download Now
                     </button>
