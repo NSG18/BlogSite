@@ -24,10 +24,10 @@ export async function POST(req: Request) {
         console.log("Email stored in database:", sub);
 
         return NextResponse.json({ message: "Subscribed successfully!", sub });
-    } catch (error: any) {
+    } catch (error: unknown) { // Use 'unknown' instead of 'any'
         console.error("Error:", error);
 
-        if (error.code === "P2002") {
+        if (error instanceof Error && "code" in error && error.code === "P2002") {
             return NextResponse.json({ error: "Email already subscribed" }, { status: 400 });
         }
 
