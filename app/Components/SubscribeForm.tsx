@@ -1,11 +1,10 @@
-
 "use client";
 import { useState } from "react";
 
 export default function SubscribeForm() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false); // Track request state
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -15,7 +14,7 @@ export default function SubscribeForm() {
             return;
         }
 
-        setIsSubmitting(true); // Disable button while processing
+        setIsSubmitting(true);
 
         try {
             const res = await fetch("/api/subscribe", {

@@ -29,6 +29,7 @@ export default function CreatePost() {
     }
   };
 
+
   return (
     <div className="min-h-screen max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
       <h1 className="text-2xl font-bold mb-4 text-black">Create a New Blog Post</h1>
